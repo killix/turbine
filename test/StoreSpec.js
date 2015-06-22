@@ -99,6 +99,18 @@ describe('Store', () => {
         expect(list.last().id).toBe('2')
       })
     })
+
+    describe('deleted items', () => {
+      beforeEach(() => {
+        store._lists('MyModel')(lists => lists.set('', new Immutable.List(['5', '2'])))
+        store._items('MyModel')(items => items.set('5', {id: '5', name: 'John'}))
+      })
+
+      it('are excluded', () => {
+        const list = store.getList('MyModel')
+        expect(list.size).toBe(1)
+      })
+    })
   })
 
 
@@ -128,7 +140,7 @@ describe('Store', () => {
     it('stores the list', () => {
       const list = new Immutable.List([{id: '123', name: 'John'}])
       store.loadListSuccess('MyModel', {}, list)
-      expect(store.getList('MyModel')).toEqual(list)
+      expect(store.getList('MyModel').equals(list)).toBe(true)
     })
   })
 
