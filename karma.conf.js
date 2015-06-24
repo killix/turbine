@@ -23,12 +23,12 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
-      'test/**/*.js*': ['webpack']//, 'sourcemap']
+      'test/**/*.js*': ['webpack', 'sourcemap']
     },
 
     webpack: {
-      // devtool: 'inline-source-map',
-      // watchDelay: 3000,
+      devtool: 'inline-source-map',
+      watchDelay: 3000,
       resolve: merge(webpackConfig.resolve, {
         alias: {
           fixtures: path.join(__dirname, 'test', 'fixtures')

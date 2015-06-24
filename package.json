@@ -20,10 +20,11 @@
   },
   "dependencies": {
     "eventemitter3": ">=1.0",
+    "graphql-parser": "^2.0.0",
     "immutable": ">=3.0",
+    "lodash": ">=3.0.0",
     "query-string": ">=2.0",
-    "lodash": "^3.9.3",
-    "react": ">=0.12"
+    "react": "0.12.x | 0.13.x"
   },
   "devDependencies": {
     "babel-core": "^5.4.7",

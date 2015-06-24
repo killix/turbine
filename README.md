@@ -8,6 +8,64 @@
 
 1. `npm install turbine`
 
+## Usage
+
+Turbine currently works with Immutable records as your models. It also expects the models to have
+`query`, `find`, `create`, `update`, `delete`/`remove` methods.
+
+```js
+export default class Asset extends new Immutable.Record({
+  id: null,
+  url: ''
+}) {
+  // define methods
+}
+```
+
+Then you need to register the models with Turbine. You'd typically do this in your entry module:
+
+```js
+Turbine.init({
+  models: {
+    'Asset': Asset
+  }
+})
+```
+
+Turbine's usage with components is similar to Relay.
+
+```js
+import React, { PropTypes } from 'react'
+import Turbine, { graphql } from 'turbine'
+
+var AssetsView = React.createClass({
+  propTypes: {
+    assets: PropTypes.array.isRequired
+  },
+
+  render() {
+    // ...
+  }
+})
+
+export default Turbine.container(AssetsView, {
+  queries: {
+    assets: graphql`
+      {
+        assets(sort: <sort>) {
+          id,
+          url
+        }
+      }
+    `
+  }
+})
+```
+
+`sort` is a property that should be passed from the parent component: `<AssetsView sort="time" />`
+
+**Warning:** The format of the query may be changed in a future release.
+
 
 ## Development
 

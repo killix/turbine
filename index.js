@@ -1,29 +1,33 @@
 'use strict'
 
-var Container = require('./lib/Container')
-var Store = require('./lib/Store')
+import graphql from 'graphql-parser'
+import Container from './lib/Container'
+import Store from './lib/Store'
+import Rotor from './lib/Rotor'
 
 /**
  * var models = {
  *   Asset: Asset
  * }
  *
- * var Data = new Turbine({models: models})
+ * Turbine.init({models: models})
  *
- * Data.container(Component, {
+ * Turbine.container(MyComponent, {
  *   queries: {
  *     assets: `
- *       Asset {
+ *       asset(id: <asset_id>) {
  *         url
  *       }
  *     `
  *   }
  * })
  */
-module.exports = function(config, initialState) {
-  var store = new Store(config, initialState)
+module.exports = {
+  graphql: graphql,
 
-  return {
-    container: new Container(store)
-  }
+  init: (config, initialState) => {
+    Rotor._store = new Store(config, initialState)
+  },
+
+  container: Container
 }
