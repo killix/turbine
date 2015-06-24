@@ -1,0 +1,11 @@
+test:
+  override:
+    # ES Lint
+    - npm run lint
+
+    # Run tests with Karma
+    - mkdir -p $CIRCLE_TEST_REPORTS/karma
+    - BROWSER=Chrome    ./node_modules/karma/bin/karma start --singleRun --reporters=dots,junit --browsers=Chrome
+    - BROWSER=Firefox   ./node_modules/karma/bin/karma start --singleRun --reporters=dots,junit --browsers=Firefox
+    - BROWSER=PhantomJS ./node_modules/karma/bin/karma start --singleRun --reporters=dots,junit --browsers=PhantomJS
+    # - BROWSER=IE9       ./node_modules/karma/bin/karma start --singleRun --reporters=dots,junit,saucelabs --browsers=sl_ie9
