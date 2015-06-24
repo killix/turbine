@@ -24,7 +24,7 @@
     "immutable": ">=3.0",
     "lodash": ">=3.0.0",
     "query-string": ">=2.0",
-    "react": "0.12.x | 0.13.x"
+    "react": ">=0.12.0 <=0.13.x"
   },
   "devDependencies": {
     "babel-core": "^5.4.7",
