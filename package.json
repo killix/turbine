@@ -1,6 +1,6 @@
 {
   "name": "turbine",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Relay-like REST-friendly Immutable-based React data library",
   "main": "index.js",
   "author": "Chute Corporation <hello@getchute.com>",
