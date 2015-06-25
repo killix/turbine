@@ -105,7 +105,9 @@ Turbine.init({
 })
 ```
 
-Turbine expects each model to have `query`, `find`, `create`, `update`, `delete`/`remove` methods.
+Turbine expects each model to have `query` and `find` methods that return Promise which
+resolves with the list or item respectively. Additionally, for updates, the models also
+need to define `create`, `update`, `delete`/`remove`.
 It's recommended to use Immutable records as your models:
 
 ```js
@@ -122,34 +124,9 @@ export default class Asset extends new Immutable.Record({
 ```
 
 
-## Development
+## Contributing
 
-1. Fork the repo
-2. `git clone git@github.com:[yourname]/turbine && cd turbine && npm i`
-3. Work your magic...
-4. Be sure you have no linting warnings/errors and tests pass.
-5. Push and open a pull request.
-
-### Linting
-
-```sh
-npm run lint
-```
-
-*Note:* It's recommended to install eslint plugin into your [code editor](http://eslint.org/docs/user-guide/integrations.html).
-
-### Testing
-
-```sh
-npm test
-```
-
-or continuously
-
-```sh
-npm i -g karma-cli
-karma start
-```
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## License
 
