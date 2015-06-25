@@ -1,7 +1,7 @@
 'use strict'
 
 var React = require('react/addons')
-var graphql = require('graphql-parser').default
+var graphql = require('../lib/graphql')
 var Container = require('../lib/Container')
 var Store = require('../lib/Store')
 var Rotor = require('../lib/Rotor')
@@ -9,6 +9,21 @@ var TestUtils = React.addons.TestUtils
 
 describe('Container', () => {
   let MyComponent, store
+
+  var createContainer = function(component) {
+    return Container(component, {
+      queries: {
+        myModels: graphql`
+          {
+            myModels(sort: <sort>) {
+              id,
+              name
+            }
+          }
+        `
+      }
+    })
+  }
 
   beforeEach(() => {
     MyComponent = React.createClass({
@@ -30,22 +45,30 @@ describe('Container', () => {
   it('wraps data fetching', () => {
     spyOn(store, 'getList').and.returnValue([{id: 1, name: 'Joe'}, {id: 2, name: 'Jack'}])
 
-    var MyContainer = Container(MyComponent, {
-      queries: {
-        myModels: graphql`
-          {
-            myModels(sort: <sort>) {
-              id,
-              name
-            }
-          }
-        `
-      }
-    })
-
+    var MyContainer = createContainer(MyComponent)
     TestUtils.renderIntoDocument(React.createElement(MyContainer, {sort: 'id'}))
 
     expect(store.getList).toHaveBeenCalledWith('MyModel', {sort: 'id'})
+  })
+
+  it('fetches new data when props change', () => {
+    spyOn(store, 'getList')
+
+    var MyContainer = createContainer(MyComponent)
+    var Wrapper = React.createClass({
+      getInitialState: function() {
+        return { sort: 'id' }
+      },
+      render() {
+        return React.createElement(MyContainer, {sort: this.state.sort})
+      }
+    })
+
+    var wrapper = TestUtils.renderIntoDocument(React.createElement(Wrapper, {}))
+    expect(store.getList).toHaveBeenCalledWith('MyModel', {sort: 'id'})
+
+    wrapper.setState({sort: 'time'})
+    expect(store.getList).toHaveBeenCalledWith('MyModel', {sort: 'time'})
   })
 
   it('passes context', () => {

@@ -1,9 +1,9 @@
 'use strict'
 
-import graphql from 'graphql-parser'
-import Container from './lib/Container'
-import Store from './lib/Store'
-import Rotor from './lib/Rotor'
+var graphql = require('./lib/graphql')
+var Container = require('./lib/Container')
+var Store = require('./lib/Store')
+var Rotor = require('./lib/Rotor')
 
 /**
  * var models = {
@@ -25,7 +25,7 @@ import Rotor from './lib/Rotor'
 module.exports = {
   graphql: graphql,
 
-  init: (config, initialState) => {
+  init: function(config, initialState) {
     Rotor._store = new Store(config, initialState)
   },
 
